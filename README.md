@@ -1,2 +1,2 @@
 # app
-ionic app
+Based on an ionic app.
