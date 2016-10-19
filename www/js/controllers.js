@@ -12,6 +12,9 @@ angular.module('starter.controllers', [])
   $scope.menu = Menu.all();
 })
 
+.controller('PromptCtrl', function($scope) {
+})
+
 .controller('MenuDetailCtrl', function($scope, $stateParams, Menu) {
   console.log($stateParams);
   $scope.menuItem = Menu.get($stateParams.menuId);
