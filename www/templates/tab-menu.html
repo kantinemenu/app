@@ -1,0 +1,13 @@
+<ion-view view-title="Menu">
+  <ion-content>
+    <ion-list>
+      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="menuItem in menu" type="item-text-wrap" href="#/tab/menu/{{ menuItem.date }}">
+        <img ng-src="{{ menuItem.images[0] }}">
+        <h3>{{ menuItem.date | date:'EEEE' }}</h3>
+        <h2>{{ menuItem.name }} </h2>
+        <p>{{ menuItem.details }}</p>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

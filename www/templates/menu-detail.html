@@ -1,0 +1,10 @@
+<ion-view view-title="{{ menuItem.name }}">
+  <ion-content class="padding">
+    <img ng-src="{{ menuItem.images[0] }}" style="width: 100%; height: 50%;">
+    <h1>{{ menuItem.date | date }}</h1>
+    <h2>{{ menuItem.name }}</h2>
+    <p>
+      {{menuItem.details}}
+    </p>
+  </ion-content>
+</ion-view>
