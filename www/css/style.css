@@ -1,3 +1,15 @@
 .capitalize {
   text-transform: capitalize;
 }
+
+.link-free,
+.link-free:hover,
+.link-free:active,
+.link-free:visited,
+.link-free:link {
+  text-decoration: none;
+}
+
+.star-remembered {
+  color: blue;
+}
