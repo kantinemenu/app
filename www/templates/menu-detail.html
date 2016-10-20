@@ -2,19 +2,17 @@
   <ion-content class="padding">
     <div class="list card">
 
-      <div class="item">
-        <h2 class="capitalize">{{ menuItem.date | date:'EEEE d. MMMM yyyy' }}</h2>
-        <h1>{{ menuItem.name }}</h1>
+      <div class="capitalize padding">
+        <h3>{{ menuItem.date | date:'EEEE d. MMMM yyyy' }}</h2>
+        <h2>{{ menuItem.name }}</h2>
       </div>
 
-      <div class="item item-image"  style="width: 100%; height: 250px; background-size: cover;  background-image: url('{{ menuItem.images[0] }}')">
+      <div class="item item-image" data-ng-if="menuItem.images && menuItem.images.length > 0" style="width: 100%; height: 250px; background-size: cover;  background-image: url('{{ menuItem.images[0] }}')">
         &nbsp;
       </div>
 
-      <div class="item">
-        <p style="text-transform: capitalize;">
-          {{menuItem.details}}
-        </p>
+      <div class="capitalize padding" data-ng-if="menuItem.description">
+        {{ menuItem.description }}
       </div>
     </div>
   </ion-content>

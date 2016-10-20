@@ -13,3 +13,27 @@
 .star-remembered {
   color: blue;
 }
+
+.bg1 {
+  background-image: url('../img/bg2.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.pane {
+  background-color: #eee;
+}
+
+.centered-parent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+
+.odd-even:nth-child(odd) {
+  background-color: #ddd;
+}
+.odd-even:nth-child(even) {
+  background-color: #ccc;
+}

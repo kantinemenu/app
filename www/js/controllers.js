@@ -40,7 +40,28 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('PromptCtrl', function($scope) {
+.controller('PromptCtrl', function($scope, $location, Canteen, Menu) {
+  Canteen.all().then(
+    function (data) {
+      $scope.canteens = data;
+    },
+    function (err) {
+      console.log(err);
+    }
+  );
+
+  $scope.run = function run() {
+    for (var canteen in $scope.canteens) {
+      canteen = $scope.canteens[canteen];
+
+      if (canteen.name === $scope.selectedCanteen) {
+        Menu.setCanteen(canteen);
+        break;
+      }
+    }
+    
+    $location.path('/tab/menu');
+  };
 })
 
 .controller('MenuDetailCtrl', function($scope, $stateParams, Menu) {
