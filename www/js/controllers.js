@@ -8,18 +8,20 @@ angular.module('starter.controllers', [])
   //
   //$scope.$on('$ionicView.enter', function(e) {
   //});
-
-  Menu.all().then(
-    function (data) {
-      console.log(JSON.stringify(data));
-      $scope.menu = data;
-    },
-    function (err) {
-      console.log(err);
-    }
-  );
+  $scope.$on('$ionicView.enter', function(e) {
+    Menu.all().then(
+      function (data) {
+        console.log(JSON.stringify(data));
+        $scope.menu = data;
+      },
+      function (err) {
+        console.log(err);
+      }
+    );
+  });
 
   $scope.star = function (menuItem) {
+    console.log(JSON.stringify(menuItem));
     menuItem.star = !menuItem.star;
 
     if (menuItem.star) {
@@ -39,28 +41,31 @@ angular.module('starter.controllers', [])
       cordova.plugins.notification.local.cancel(1);
     }
 
-    console.log(Menu.save());
+    Menu.save();
   };
 })
 
 .controller('PromptCtrl', function($scope, $location, Canteen, Menu, localStorageService) {
-  if (localStorageService.get('canteen')) {
-    $location.path('/tab/menu');
-    return;
-  }
-
-  Canteen.all().then(
-    function (data) {
-      $scope.canteens = data;
-    },
-    function (err) {
-      console.log(err);
+  $scope.$on('$ionicView.enter', function(e) {
+    if (localStorageService.get('canteen')) {
+      $location.path('/tab/menu');
+      return;
     }
-  );
+
+    Canteen.all().then(
+      function (data) {
+        $scope.canteens = data;
+      },
+      function (err) {
+        console.log(err);
+      }
+    );
+  });
 
   $scope.run = function run() {
     if (!$scope.selectedCanteen) {
-      alert('Vælg kantine')
+      alert('Vælg kantine');
+      return;
     }
 
     for (var canteen in $scope.canteens) {
@@ -77,16 +82,21 @@ angular.module('starter.controllers', [])
 })
 
 .controller('MenuDetailCtrl', function($scope, $stateParams, Menu) {
-  Menu.get($stateParams.menuId).then(
-    function (data) {
-      $scope.menuItem = data;
-    },
-    function (err) {
-      console.log(err);
-    }
-  );
+  $scope.$on('$ionicView.enter', function(e) {
+    Menu.get($stateParams.menuId).then(
+      function (data) {
+        $scope.menuItem = data;
+      },
+      function (err) {
+        console.log(err);
+      }
+    );
+  });
 })
 
-.controller('SettingsCtrl', function($scope) {
-
+.controller('SettingsCtrl', function($scope, localStorageService, $location) {
+  $scope.resetCanteen = function () {
+    localStorageService.set('canteen', null);
+    $location.path('/prompt');
+  };
 });

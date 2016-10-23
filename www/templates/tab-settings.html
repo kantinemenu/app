@@ -1,9 +1,12 @@
 <ion-view view-title="Indstillinger">
-  <ion-content>
+  <ion-content class="padding">
     <ion-list>
-      <ion-toggle  ng-model="settings.enableFriends">
-          Enable Friends
+      <ion-toggle ng-model="settings.enableNotifications">
+          Enable notifications
       </ion-toggle>
+      <button class="button button-assertive button-block" data-ng-click="resetCanteen()">
+        Vælg anden kantine
+      </button>
     </ion-list>
   </ion-content>
 </ion-view>

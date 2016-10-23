@@ -57,6 +57,9 @@ angular.module('starter.services', [])
     var deferred = $q.defer();
 
     if (canteen && (refresh || !menu)) {
+      console.log("getting fresh");
+
+      
       $http.get(canteen.apiUrl)
         .success(function (data) {
           if (!menu) {
