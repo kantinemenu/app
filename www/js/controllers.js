@@ -11,6 +11,7 @@ angular.module('starter.controllers', [])
 
   Menu.all().then(
     function (data) {
+      console.log(JSON.stringify(data));
       $scope.menu = data;
     },
     function (err) {
@@ -27,7 +28,7 @@ angular.module('starter.controllers', [])
       cordova.plugins.notification.local.schedule({
         id: 1,
         title: menuItem.name,
-        text: menuItem.details,
+        text: menuItem.description,
         at: (new Date(menuItem.date)).getTime() - 5 * 60 * 60 * 1000,
         data: menuItem.date
       });
@@ -37,10 +38,17 @@ angular.module('starter.controllers', [])
 
       cordova.plugins.notification.local.cancel(1);
     }
+
+    console.log(Menu.save());
   };
 })
 
-.controller('PromptCtrl', function($scope, $location, Canteen, Menu) {
+.controller('PromptCtrl', function($scope, $location, Canteen, Menu, localStorageService) {
+  if (localStorageService.get('canteen')) {
+    $location.path('/tab/menu');
+    return;
+  }
+
   Canteen.all().then(
     function (data) {
       $scope.canteens = data;
@@ -51,6 +59,10 @@ angular.module('starter.controllers', [])
   );
 
   $scope.run = function run() {
+    if (!$scope.selectedCanteen) {
+      alert('Vælg kantine')
+    }
+
     for (var canteen in $scope.canteens) {
       canteen = $scope.canteens[canteen];
 
@@ -59,7 +71,7 @@ angular.module('starter.controllers', [])
         break;
       }
     }
-    
+
     $location.path('/tab/menu');
   };
 })
