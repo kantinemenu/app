@@ -1,12 +1,13 @@
 <ion-view view-title="Menu" class="bg2">
   <ion-content>
     <ion-list>
-      <ion-item class="item-remove-animate item-thumbnail-left item-icon-right odd-even" ng-repeat="menuItem in menu" type="item-text-wrap">
-        <img ng-src="{{ menuItem.images[0] }}" href="#/tab/menu/{{ menuItem.date }}">
-        <a class="link-free" href="#/tab/menu/{{ menuItem.date }}">
-          <h3 class="capitalize">{{ menuItem.date | date:'EEEE' }}</h3>
-          <h2>{{ menuItem.name }} </h2>
-          <p>{{ menuItem.description }}</p>
+      <ion-item class="item-remove-animate item-icon-right odd-even" ng-repeat="(key, value) in menu track by $index" type="item-text-wrap">
+        <a class="link-free" href="#/tab/menu/{{ key }}">
+          <button class="button capitalize {{ 'button-' + buttonClasses[$index % buttonClasses.length] }}">{{ key | date:'EEEE' }}</button>
+          <div data-ng-repeat="menuItem in value" class="padding-top padding-bottom">
+            <h2>{{ menuItem.name }} </h2>
+            <p>{{ menuItem.description }}</p>
+          </div>
         </a>
         <i class="icon ion-star" data-ng-click="star(menuItem)" data-ng-class="{ 'star-remembered': menuItem.star }"></i>
       </ion-item>

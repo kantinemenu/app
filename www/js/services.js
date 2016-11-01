@@ -59,9 +59,22 @@ angular.module('starter.services', [])
     if (canteen && (refresh || !menu)) {
       console.log("getting fresh");
 
-      
       $http.get(canteen.apiUrl)
         .success(function (data) {
+          menu = {};
+
+          for (var i = 0; i < data.menus.length; i++) {
+            var date = new Date(data.menus[i].date);
+            date = date.getTime();
+            if (!menu[date]) {
+              menu[date] = [];
+            }
+
+            menu[date].push(data.menus[i]);
+          }
+
+          // @TODO: Apply former stars.
+/*
           if (!menu) {
             menu = data.menus;
           }
@@ -78,7 +91,7 @@ angular.module('starter.services', [])
 
             menu = data.menus;
           }
-
+*/
           localStorageService.set('menu', menu);
 
           deferred.resolve(menu);
@@ -115,9 +128,10 @@ angular.module('starter.services', [])
 
       getMenu().then(
         function () {
-          for (var i = 0; i < menu.length; i++) {
-            if (menu[i].date === date) {
-              deferred.resolve(menu[i]);
+          for (var key in menu) {
+            if (key === date) {
+              deferred.resolve(menu[key]);
+              return;
             }
           }
           deferred.reject('Not found');

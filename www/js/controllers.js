@@ -11,8 +11,21 @@ angular.module('starter.controllers', [])
   $scope.$on('$ionicView.enter', function(e) {
     Menu.all().then(
       function (data) {
-        console.log(JSON.stringify(data));
+        /*var menu = {};
+
+        for (var i = 0; i < data.length; i++) {
+          var date = new Date(data[i].date);
+          date = date.getTime();
+          if (!menu[date]) {
+            menu[date] = [];
+          }
+
+          menu[date].push(data[i]);
+        }*/
+
         $scope.menu = data;
+
+        $scope.buttonClasses = ['positive', 'royal', 'assertive', 'balanced', 'dark', 'calm', 'energized'];
       },
       function (err) {
         console.log(err);
@@ -83,9 +96,11 @@ angular.module('starter.controllers', [])
 
 .controller('MenuDetailCtrl', function($scope, $stateParams, Menu) {
   $scope.$on('$ionicView.enter', function(e) {
-    Menu.get($stateParams.menuId).then(
+    $scope.date = $stateParams.menuId;
+
+    Menu.get($scope.date).then(
       function (data) {
-        $scope.menuItem = data;
+        $scope.menu = data;
       },
       function (err) {
         console.log(err);

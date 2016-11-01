@@ -1,9 +1,8 @@
-<ion-view view-title="{{ menuItem.name }}">
+<ion-view view-title="{{ date | date:'EEEE d. MMMM yyyy' }}">
   <ion-content class="padding">
-    <div class="list card">
+    <div class="list card" data-ng-repeat="menuItem in menu">
 
       <div class="capitalize padding">
-        <h3>{{ menuItem.date | date:'EEEE d. MMMM yyyy' }}</h2>
         <h2>{{ menuItem.name }}</h2>
       </div>
 
