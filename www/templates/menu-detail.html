@@ -2,15 +2,15 @@
   <ion-content class="padding">
     <div class="list card" data-ng-repeat="menuItem in menu">
 
-      <div class="capitalize padding">
+      <div class="padding">
         <h2>{{ menuItem.name }}</h2>
       </div>
 
-      <div class="item item-image" data-ng-if="menuItem.images && menuItem.images.length > 0" style="width: 100%; height: 250px; background-size: cover;  background-image: url('{{ menuItem.images[0] }}')">
+      <!--<div class="item item-image" data-ng-if="menuItem.images && menuItem.images.length > 0" style="width: 100%; height: 250px; background-size: cover;  background-image: url('{{ menuItem.images[0] }}')">
         &nbsp;
-      </div>
+      </div>-->
 
-      <div class="capitalize padding" data-ng-if="menuItem.description">
+      <div class="padding" data-ng-if="menuItem.description">
         {{ menuItem.description }}
       </div>
     </div>

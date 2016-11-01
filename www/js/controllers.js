@@ -1,60 +1,50 @@
 angular.module('starter.controllers', [])
 
-.controller('MenuCtrl', function($scope, Menu, $filter) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
+.controller('MenuCtrl', function($scope, Menu, $filter, localStorageService) {
   $scope.$on('$ionicView.enter', function(e) {
     Menu.all().then(
       function (data) {
-        /*var menu = {};
-
-        for (var i = 0; i < data.length; i++) {
-          var date = new Date(data[i].date);
-          date = date.getTime();
-          if (!menu[date]) {
-            menu[date] = [];
-          }
-
-          menu[date].push(data[i]);
-        }*/
-
         $scope.menu = data;
 
-        $scope.buttonClasses = ['positive', 'royal', 'assertive', 'balanced', 'dark', 'calm', 'energized'];
+        $scope.colors = [ '#deb959', '#d54444', '#d874a2', '#ed885f', '#9783b7', '#090916', '#2a2447'];
       },
       function (err) {
-        console.log(err);
+        //console.log(err);
       }
     );
+
+    // Load stars
+    $scope.stars = localStorageService.get('stars');
+    if (!$scope.stars) {
+      $scope.stars = [];
+    }
   });
 
-  $scope.star = function (menuItem) {
-    console.log(JSON.stringify(menuItem));
-    menuItem.star = !menuItem.star;
-
-    if (menuItem.star) {
-      console.log('Schedule til: ', $filter('date')((new Date(menuItem.date)).getTime() - 5 * 60 * 60 * 1000, 'medium'));
-
-      cordova.plugins.notification.local.schedule({
-        id: 1,
-        title: menuItem.name,
-        text: menuItem.description,
-        at: (new Date(menuItem.date)).getTime() - 5 * 60 * 60 * 1000,
-        data: menuItem.date
-      });
+  $scope.star = function (date, menu) {
+    if ($scope.stars.indexOf(date) !== -1) {
+      $scope.stars.splice($scope.stars.indexOf(date), 1);
+      cordova.plugins.notification.local.cancel(date);
     }
     else {
-      console.log('cancel 1');
+      $scope.stars.push(date);
 
-      cordova.plugins.notification.local.cancel(1);
+      var menuTitles = [];
+      for (var i = 0; i < menu.length; i++) {
+        menuTitles.push(menu[i].name);
+      }
+
+      if (localStorageService.get('enabled_notifications')) {
+        cordova.plugins.notification.local.schedule({
+          id: date,
+          title: "Husk maden i kantinen i morgen!",
+          text: "På menuen i morgen: " + menuTitles.join(', '),
+          at: date - 5 * 60 * 60 * 1000,
+          data: date
+        });
+      }
     }
 
-    Menu.save();
+    localStorageService.set('stars', $scope.stars);
   };
 })
 
@@ -70,7 +60,7 @@ angular.module('starter.controllers', [])
         $scope.canteens = data;
       },
       function (err) {
-        console.log(err);
+        //console.log(err);
       }
     );
   });
@@ -103,15 +93,24 @@ angular.module('starter.controllers', [])
         $scope.menu = data;
       },
       function (err) {
-        console.log(err);
+        //console.log(err);
       }
     );
   });
 })
 
 .controller('SettingsCtrl', function($scope, localStorageService, $location) {
+  $scope.$on('$ionicView.enter', function(e) {
+    $scope.notificationsEnabled = localStorageService.get('enabled_notifications');
+  });
+
   $scope.resetCanteen = function () {
     localStorageService.set('canteen', null);
     $location.path('/prompt');
   };
+
+  $scope.toggleNotifications = function () {
+    $scope.notificationsEnabled = !$scope.notificationsEnabled;
+    localStorageService.set('enabled_notifications', $scope.notificationsEnabled);
+  }
 });

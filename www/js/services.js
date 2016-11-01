@@ -57,10 +57,9 @@ angular.module('starter.services', [])
     var deferred = $q.defer();
 
     if (canteen && (refresh || !menu)) {
-      console.log("getting fresh");
-
       $http.get(canteen.apiUrl)
         .success(function (data) {
+          var oldMenu = angular.copy(menu);
           menu = {};
 
           for (var i = 0; i < data.menus.length; i++) {
@@ -70,28 +69,11 @@ angular.module('starter.services', [])
               menu[date] = [];
             }
 
+            data.menus[i].date = date;
+
             menu[date].push(data.menus[i]);
           }
 
-          // @TODO: Apply former stars.
-/*
-          if (!menu) {
-            menu = data.menus;
-          }
-          else {
-            // Update the menu.
-            for (var i = 0; i < data.menus.length; i++) {
-              for (var j = 0; j < menu.length; j++) {
-                if (menu[j].name === data.menus[i].name && menu[j].date === data.menus[i].date) {
-                  data.menus[i].star = menu[j].star;
-                  break;
-                }
-              }
-            }
-
-            menu = data.menus;
-          }
-*/
           localStorageService.set('menu', menu);
 
           deferred.resolve(menu);
@@ -112,7 +94,6 @@ angular.module('starter.services', [])
 
   return {
     save: function () {
-      console.log("saving: " + JSON.stringify(menu));
       return localStorageService.set('menu', menu);
     },
     setCanteen: function (selectedCanteen) {

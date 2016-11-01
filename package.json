@@ -1,7 +1,7 @@
 {
-  "name": "kantinemenu",
+  "name": "kantinen",
   "version": "1.1.1",
-  "description": "kantinemenu: An Ionic project",
+  "description": "kantinen",
   "dependencies": {
     "gulp": "^3.5.6",
     "gulp-sass": "^2.0.4",

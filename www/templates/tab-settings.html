@@ -1,12 +1,16 @@
 <ion-view view-title="Indstillinger">
   <ion-content class="padding">
-    <ion-list>
-      <!--<ion-toggle ng-model="settings.enableNotifications">
-          Enable notifications
-      </ion-toggle>-->
+    <div class="padding box">
+      <h5>Vil du have beskeder aftenen før der er noget noget "stjerne-godt" i kantinen?</h5>
+      <ion-toggle ng-model="settings.enableNotifications" data-ng-click="toggleNotifications()">
+        Notifikationer
+      </ion-toggle>
+    </div>
+    <div class="padding box">
+      <h5>Vil du ændre, hvilken kantine du ser menuen for?</h5>
       <button class="button button-assertive button-block" data-ng-click="resetCanteen()">
         Vælg anden kantine
       </button>
-    </ion-list>
+    </div>
   </ion-content>
 </ion-view>

@@ -32,8 +32,15 @@
 }
 
 .odd-even:nth-child(odd) {
-  background-color: #ddd;
+  background-color: #eeeeee;
 }
 .odd-even:nth-child(even) {
-  background-color: #ccc;
+  background-color: #e6e6e6;
+}
+
+.box {
+  border: 1px solid #ccc;
+  background-color: white;
+  border-radius: 5px;
+  margin-bottom: 1em;
 }

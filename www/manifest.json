@@ -1,6 +1,6 @@
 {
-  "name": "My Ionic App",
-  "short_name": "My Ionic App",
+  "name": "Kantinen",
+  "short_name": "Kantinen",
   "start_url": "index.html",
   "display": "standalone",
   "icons": [{
